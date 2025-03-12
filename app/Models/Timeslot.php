@@ -5,7 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TimeSlot extends Model
+/**
+ * 
+ *
+ * @property-read \App\Models\Doctor|null $doctor
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Timeslot newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Timeslot newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Timeslot query()
+ * @mixin \Eloquent
+ */
+class Timeslot extends Model
 {
     use HasFactory;
 
