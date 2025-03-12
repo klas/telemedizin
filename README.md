@@ -1,66 +1,226 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Telemedizin API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Diese API ermöglicht das Verwalten von Ärzten, Fachgebieten, Terminen und Zeitslots für Telemedizin-Konsultationen.
 
-## About Laravel
+## Funktionen
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Verwaltung von Ärzten und deren Fachgebieten
+- Terminbuchung und -stornierung
+- Verfügbare Zeitslots abrufen
+- Echtzeit-Verfügbarkeitsprüfung
+- E-Mail-Benachrichtigungen für Terminbestätigungen
+- Suchfunktion für Ärzte
+- Alle Benutzeroberflächen-Texte auf Deutsch
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technische Anforderungen
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.1 oder höher
+- Composer
+- MySQL oder eine andere Laravel-kompatible Datenbank
+- Laravel 10.x
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Repository klonen
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone https://github.com/username/telemedizin-api.git
+cd telemedizin-api
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Abhängigkeiten installieren
 
-## Laravel Sponsors
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Umgebungsvariablen konfigurieren
 
-### Premium Partners
+```bash
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Bearbeiten Sie die `.env`-Datei und konfigurieren Sie Ihre Datenbankverbindung:
 
-## Contributing
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=telemedizin
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Für E-Mail-Funktionalität, konfigurieren Sie auch die Mail-Einstellungen:
 
-## Code of Conduct
+```
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="noreply@telemedizin.de"
+MAIL_FROM_NAME="${APP_NAME}"
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Anwendungsschlüssel generieren
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Datenbank-Migrationen ausführen
 
-## License
+```bash
+php artisan migrate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 6. (Optional) Seed-Daten einfügen
+
+```bash
+php artisan db:seed
+```
+
+## Starten der Anwendung
+
+```bash
+php artisan serve
+```
+
+Die API ist nun unter `http://localhost:8000` verfügbar.
+
+## API-Endpunkte
+
+### Ärzte
+
+- `GET /api/v1/doctors` - Alle Ärzte abrufen
+- `GET /api/v1/doctors/{id}` - Einen bestimmten Arzt abrufen
+- `GET /api/v1/doctors/search?suche={suchbegriff}` - Ärzte nach Name oder Fachgebiet suchen
+
+### Fachgebiete
+
+- `GET /api/v1/specializations` - Alle Fachgebiete abrufen
+
+### Zeitslots
+
+- `GET /api/v1/time-slots?doctor_id={id}&datum={datum}` - Verfügbare Zeitslots für einen Arzt abrufen
+- `POST /api/v1/time-slots/check-availability` - Echtzeit-Verfügbarkeit eines Zeitslots prüfen
+
+### Termine
+
+- `GET /api/v1/appointments` - Alle Termine abrufen
+- `GET /api/v1/appointments/{id}` - Einen bestimmten Termin abrufen
+- `POST /api/v1/appointments` - Einen neuen Termin erstellen
+- `PUT /api/v1/appointments/{id}/cancel` - Einen Termin stornieren
+
+## Beispielanfragen
+
+### Termin erstellen
+
+```bash
+curl -X POST http://localhost:8000/api/v1/appointments \
+  -H "Content-Type: application/json" \
+  -d '{
+    "doctor_id": 1,
+    "patient_name": "Max Mustermann",
+    "patient_email": "max@example.com",
+    "date_time": "2025-03-20 14:30:00"
+  }'
+```
+
+### Verfügbare Zeitslots abrufen
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/time-slots?doctor_id=1&datum=2025-03-20"
+```
+
+### Nach Ärzten suchen
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/doctors/search?suche=Kardiologie"
+```
+
+## Testen
+
+Unit-Tests können mit folgendem Befehl ausgeführt werden:
+
+```bash
+php artisan test
+```
+
+## Datenbank-Seeding
+
+Um Testdaten zu erstellen, können Sie folgende Befehle ausführen:
+
+```bash
+php artisan db:seed --class=SpecializationSeeder
+php artisan db:seed --class=DoctorSeeder
+php artisan db:seed --class=TimeSlotSeeder
+```
+
+## Datenmodell
+
+- **Doctor**: `id`, `name`, `specialization_id`
+- **Specialization**: `id`, `name`
+- **Appointment**: `id`, `doctor_id`, `patient_name`, `patient_email`, `date_time`, `status`
+- **TimeSlot**: `id`, `doctor_id`, `start_time`, `end_time`, `is_available`
+
+## Benutzerdefinierte Seeder
+
+Sie können Seeders für Ihre Testdaten erstellen:
+
+```bash
+php artisan make:seeder SpecializationSeeder
+php artisan make:seeder DoctorSeeder
+php artisan make:seeder TimeSlotSeeder
+```
+
+Beispielinhalt für `database/seeders/SpecializationSeeder.php`:
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Specialization;
+use Illuminate\Database\Seeder;
+
+class SpecializationSeeder extends Seeder
+{
+    public function run()
+    {
+        $specializations = [
+            'Allgemeinmedizin',
+            'Kardiologie',
+            'Dermatologie',
+            'Neurologie',
+            'Orthopädie',
+            'Pädiatrie',
+            'Psychiatrie',
+            'Urologie',
+            'Gynäkologie',
+            'Onkologie'
+        ];
+
+        foreach ($specializations as $name) {
+            Specialization::create(['name' => $name]);
+        }
+    }
+}
+```
+
+## Fehlerbehebung
+
+### API gibt 500-Fehler zurück
+- Überprüfen Sie die Laravel-Logs unter `storage/logs/laravel.log`
+- Stellen Sie sicher, dass die Datenbankverbindung korrekt konfiguriert ist
+- Überprüfen Sie, ob alle Migrationen erfolgreich ausgeführt wurden
+
+### E-Mails werden nicht gesendet
+- Überprüfen Sie Ihre Mail-Konfiguration in der `.env`-Datei
+- Für die lokale Entwicklung empfehlen wir [Mailhog](https://github.com/mailhog/MailHog)
+
+## Lizenz
+
+Dieses Projekt ist unter der MIT-Lizenz lizenziert.
