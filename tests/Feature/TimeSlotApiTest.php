@@ -28,7 +28,7 @@ class TimeSlotApiTest extends TestCase
         ]);
 
         // Test API endpoint
-        $response = $this->getJson("/api/v1/time-slots?doctor_id={$doctor->id}");
+        $response = $this->getJson("/api/v1/time-slots?doctor_id=$doctor->id");
 
         $response->assertStatus(200)
             ->assertJsonStructure([

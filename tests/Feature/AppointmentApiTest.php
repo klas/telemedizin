@@ -84,7 +84,7 @@ class AppointmentApiTest extends TestCase
         ]);
 
         // Test API endpoint
-        $response = $this->putJson("/api/v1/appointments/{$appointment->id}/cancel");
+        $response = $this->putJson("/api/v1/appointments/$appointment->id/cancel");
 
         $response->assertStatus(200)
             ->assertJsonStructure([

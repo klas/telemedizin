@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Mail\AppointmentConfirmation;
 use App\Models\Appointment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Mail\Mailable;
 use Tests\TestCase;
 
 class AppointmentConfirmationTest extends TestCase
@@ -23,7 +24,7 @@ class AppointmentConfirmationTest extends TestCase
         $appointment = new Appointment();
         $mail = new AppointmentConfirmation($appointment);
         $mailable = $mail->build();
-        $this->assertInstanceOf(\Illuminate\Mail\Mailable::class, $mailable);
+        $this->assertInstanceOf(Mailable::class, $mailable);
     }
 
     public function test_build_sets_subject()
