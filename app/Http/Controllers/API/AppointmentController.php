@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
-use App\Models\Timeslot;
+use App\Models\TimeSlot;
 use App\Mail\AppointmentConfirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -48,7 +48,7 @@ class AppointmentController extends Controller
 
         try {
             // Check if the time slot is available
-            $timeSlot = Timeslot::where('doctor_id', $request->doctor_id)
+            $timeSlot = TimeSlot::where('doctor_id', $request->doctor_id)
                 ->where('start_time', '<=', $request->date_time)
                 ->where('end_time', '>=', $request->date_time)
                 ->where('is_available', true)
@@ -118,7 +118,7 @@ class AppointmentController extends Controller
             $appointment->save();
 
             // Make the time slot available again
-            $timeSlot = Timeslot::where('doctor_id', $appointment->doctor_id)
+            $timeSlot = TimeSlot::where('doctor_id', $appointment->doctor_id)
                 ->where('start_time', '<=', $appointment->date_time)
                 ->where('end_time', '>=', $appointment->date_time)
                 ->first();

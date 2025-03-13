@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Timeslot;
+use App\Models\TimeSlot;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -26,7 +26,7 @@ class TimeSlotController extends Controller
             ? Carbon::parse($request->input('datum'))->startOfDay()
             : Carbon::now()->startOfDay();
 
-        $timeSlots = Timeslot::where('doctor_id', $doctorId)
+        $timeSlots = TimeSlot::where('doctor_id', $doctorId)
             ->where('is_available', true)
             ->whereDate('start_time', '>=', $date)
             ->orderBy('start_time')
@@ -54,7 +54,7 @@ class TimeSlotController extends Controller
         \DB::beginTransaction();
 
         try {
-            $timeSlot = Timeslot::lockForUpdate()->find($timeSlotId);
+            $timeSlot = TimeSlot::lockForUpdate()->find($timeSlotId);
 
             $isAvailable = $timeSlot && $timeSlot->is_available;
 
