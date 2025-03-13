@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::get('/doctors', [DoctorController::class, 'index']);
     Route::get('/doctors/{id}', [DoctorController::class, 'show']);
-    Route::get('/doctors/search', [DoctorController::class, 'search']);
 
     Route::get('/specializations', [SpecializationController::class, 'index']);
 

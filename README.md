@@ -33,7 +33,7 @@ Die API ist nun unter `http://localhost` verfügbar.
 
 - `GET /api/v1/doctors` - Alle Ärzte abrufen
 - `GET /api/v1/doctors/{id}` - Einen bestimmten Arzt abrufen
-- `GET /api/v1/doctors/search?suche={suchbegriff}` - Ärzte nach Name oder Fachgebiet suchen
+- `GET /api/v1/doctors?search={suchbegriff}` - Ärzte nach Name oder Fachgebiet suchen
 
 ### Fachgebiete
 
@@ -75,7 +75,7 @@ curl -X GET "http://localhost/api/v1/time-slots?doctor_id=1&datum=2025-03-20"
 ### Nach Ärzten suchen
 
 ```bash
-curl -X GET "http://localhost/api/v1/doctors/search?suche=Kardiologie"
+curl -X GET "http://localhost/api/v1/doctors?search=Kardiologie"
 ```
 
 ## Testen
