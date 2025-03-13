@@ -15,7 +15,7 @@ class AppointmentRequest extends FormRequest
         return true; // Public API, no authentication
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'doctor_id' => 'required|exists:doctors,id',
@@ -25,7 +25,7 @@ class AppointmentRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'doctor_id.required' => 'Die Arzt-ID ist erforderlich.',

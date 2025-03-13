@@ -11,7 +11,7 @@ class AppointmentConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $appointment;
+    public Appointment $appointment;
 
     public function __construct(Appointment $appointment)
     {

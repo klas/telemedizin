@@ -2,21 +2,26 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *
  *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Appointment> $appointments
+ * @property-read Collection<int, \App\Models\Appointment> $appointments
  * @property-read int|null                                                               $appointments_count
- * @property-read \App\Models\Specialization|null                                        $specialization
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TimeSlot>    $timeSlots
+ * @property-read Specialization|null                                        $specialization
+ * @property-read Collection<int, \App\Models\TimeSlot>    $timeSlots
  * @property-read int|null                                                               $time_slots_count
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor query()
- * @mixin \Eloquent
+ * @method static Builder<static>|Doctor newModelQuery()
+ * @method static Builder<static>|Doctor newQuery()
+ * @method static Builder<static>|Doctor query()
+ * @mixin Eloquent
  */
 class Doctor extends Model
 {
@@ -24,17 +29,17 @@ class Doctor extends Model
 
     protected $fillable = ['name', 'specialization_id'];
 
-    public function specialization()
+    public function specialization(): BelongsTo
     {
         return $this->belongsTo(Specialization::class);
     }
 
-    public function appointments()
+    public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class);
     }
 
-    public function timeSlots()
+    public function timeSlots(): HasMany
     {
         return $this->hasMany(TimeSlot::class);
     }

@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
  *
- * @property-read \App\Models\Doctor|null $doctor
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment query()
- * @mixin \Eloquent
+ *
+ * @property-read Doctor|null $doctor
+ * @method static Builder<static>|Appointment newModelQuery()
+ * @method static Builder<static>|Appointment newQuery()
+ * @method static Builder<static>|Appointment query()
+ * @mixin Eloquent
  */
 class Appointment extends Model
 {
@@ -30,7 +33,7 @@ class Appointment extends Model
         'date_time' => 'datetime',
     ];
 
-    public function doctor()
+    public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class);
     }

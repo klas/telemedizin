@@ -8,14 +8,14 @@ class CheckRealTimeAvailabilityRequest extends FormRequest
 {
     use RequestHelper;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'time_slot_id' => 'required|exists:time_slots,id',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'time_slot_id.required' => 'Die Terminzeit-ID ist erforderlich.',

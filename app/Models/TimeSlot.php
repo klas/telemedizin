@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  *
  *
- * @property-read \App\Models\Doctor|null $doctor
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TimeSlot newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TimeSlot newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TimeSlot query()
- * @mixin \Eloquent
+ * @property-read Doctor|null $doctor
+ * @method static Builder<static>|TimeSlot newModelQuery()
+ * @method static Builder<static>|TimeSlot newQuery()
+ * @method static Builder<static>|TimeSlot query()
+ * @mixin Eloquent
  */
 class TimeSlot extends Model
 {
@@ -31,7 +34,7 @@ class TimeSlot extends Model
         'is_available' => 'boolean',
     ];
 
-    public function doctor()
+    public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class);
     }

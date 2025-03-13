@@ -8,7 +8,7 @@ class GetAvailableTimeSlotsRequest extends FormRequest
 {
     use RequestHelper;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'doctor_id' => 'required|exists:doctors,id',
@@ -16,7 +16,7 @@ class GetAvailableTimeSlotsRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'doctor_id.required' => 'Die Arzt-ID ist erforderlich.',

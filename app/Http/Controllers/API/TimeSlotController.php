@@ -7,10 +7,14 @@ use App\Http\Requests\GetAvailableTimeSlotsRequest;
 use App\Http\Requests\CheckRealTimeAvailabilityRequest;
 use App\Models\TimeSlot;
 use Carbon\Carbon;
+use DB;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class TimeSlotController extends Controller
 {
-    public function getAvailableSlots(GetAvailableTimeSlotsRequest $request)
+    public function getAvailableSlots(GetAvailableTimeSlotsRequest $request): JsonResponse
     {
         $doctorId = $request->input('doctor_id');
         $date = $request->has('datum')
@@ -31,28 +35,28 @@ class TimeSlotController extends Controller
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function checkRealTimeAvailability(CheckRealTimeAvailabilityRequest $request)
+    public function checkRealTimeAvailability(CheckRealTimeAvailabilityRequest $request): JsonResponse
     {
         $timeSlotId = $request->input('time_slot_id');
 
         // Use a transaction to prevent race conditions
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             $timeSlot = TimeSlot::lockForUpdate()->find($timeSlotId);
 
             $isAvailable = $timeSlot && $timeSlot->is_available;
 
-            \DB::commit();
+            DB::commit();
 
             return response()->json([
                 'erfolg' => $isAvailable,
                 'nachricht' => $isAvailable ? 'Termin ist verfügbar' : 'Termin ist nicht mehr verfügbar'
             ], $isAvailable ? 200 : 422);
-        } catch (\Exception $e) {
-            \DB::rollBack();
+        } catch (Exception $e) {
+            DB::rollBack();
 
             return response()->json([
                 'erfolg' => false,

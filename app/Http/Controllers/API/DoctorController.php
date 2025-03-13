@@ -5,17 +5,18 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class DoctorController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $doctors = Doctor::with('specialization');
 
         if ($query = $request->input('search')) {
-            $doctors = $doctors->where('name', 'LIKE', "%{$query}%")
+            $doctors = $doctors->where('name', 'LIKE', "%$query%")
                 ->orWhereHas('specialization', function ($q) use ($query) {
-                    $q->where('name', 'LIKE', "%{$query}%");
+                    $q->where('name', 'LIKE', "%$query%");
                 });
         }
 
@@ -26,7 +27,7 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $doctor = Doctor::with('specialization')->find($id);
 

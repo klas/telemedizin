@@ -7,12 +7,16 @@ use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
 use App\Models\TimeSlot;
 use App\Mail\AppointmentConfirmation;
-use Illuminate\Http\Request;
+use DB;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
+use Log;
+use Throwable;
 
 class AppointmentController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         $appointments = Appointment::with('doctor.specialization')->get();
 
@@ -23,7 +27,7 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $appointment = Appointment::with('doctor.specialization')->find($id);
 
@@ -42,12 +46,12 @@ class AppointmentController extends Controller
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function store(AppointmentRequest $request)
+    public function store(AppointmentRequest $request): JsonResponse
     {
         // Begin transaction to ensure data consistency
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             // Check if the time slot is available
@@ -59,7 +63,7 @@ class AppointmentController extends Controller
                 ->first();
 
             if (!$timeSlot) {
-                \DB::rollBack();
+                DB::rollBack();
                 return response()->json([
                     'erfolg' => false,
                     'nachricht' => 'Der gewählte Termin ist nicht verfügbar'
@@ -79,7 +83,7 @@ class AppointmentController extends Controller
             $timeSlot->is_available = false;
             $timeSlot->save();
 
-            \DB::commit();
+            DB::commit();
 
             // Send confirmation email
             $this->sendAppointmentConfirmation($appointment);
@@ -89,8 +93,8 @@ class AppointmentController extends Controller
                 'nachricht' => 'Termin erfolgreich erstellt',
                 'daten' => $appointment
             ], 201);
-        } catch (\Exception $e) {
-            \DB::rollBack();
+        } catch (Exception $e) {
+            DB::rollBack();
 
             return response()->json([
                 'erfolg' => false,
@@ -100,16 +104,19 @@ class AppointmentController extends Controller
         }
     }
 
-    public function cancel($id)
+    /**
+     * @throws Throwable
+     */
+    public function cancel($id): JsonResponse
     {
         // Begin transaction to ensure data consistency
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             $appointment = Appointment::findOrFail($id);
 
             if ($appointment->status === 'storniert') {
-                \DB::rollBack();
+                DB::rollBack();
                 return response()->json([
                     'erfolg' => false,
                     'nachricht' => 'Dieser Termin wurde bereits storniert'
@@ -131,15 +138,15 @@ class AppointmentController extends Controller
                 $timeSlot->save();
             }
 
-            \DB::commit();
+            DB::commit();
 
             return response()->json([
                 'erfolg' => true,
                 'nachricht' => 'Termin erfolgreich storniert',
                 'daten' => $appointment
             ]);
-        } catch (\Exception $e) {
-            \DB::rollBack();
+        } catch (Exception $e) {
+            DB::rollBack();
 
             return response()->json([
                 'erfolg' => false,
@@ -149,7 +156,7 @@ class AppointmentController extends Controller
         }
     }
 
-    protected function sendAppointmentConfirmation($appointment)
+    protected function sendAppointmentConfirmation($appointment): bool
     {
         try {
             // For a real application, this would send an actual email
@@ -157,11 +164,11 @@ class AppointmentController extends Controller
             // Mail::to($appointment->patient_email)->send(new AppointmentConfirmation($appointment));
 
             // Log instead for simulation
-            \Log::info('Terminbestätigungsmail gesendet an: ' . $appointment->patient_email);
+            Log::info('Terminbestätigungsmail gesendet an: ' . $appointment->patient_email);
 
             return true;
-        } catch (\Exception $e) {
-            \Log::error('Fehler beim Senden der Terminbestätigungsmail: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Fehler beim Senden der Terminbestätigungsmail: ' . $e->getMessage());
             return false;
         }
     }
