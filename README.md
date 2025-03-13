@@ -9,29 +9,25 @@ Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Dies
 - Verfügbare Zeitslots abrufen
 - Echtzeit-Verfügbarkeitsprüfung
 - E-Mail-Benachrichtigungen für Terminbestätigungen
-- Suchfunktion für Ärzte
-- Alle Benutzeroberflächen-Texte auf Deutsch
+- Suchfunktion für Ärzte und Fachgebiete
 
 ## Installation
 
-- Clone the Repo git clone https://github.com/klas/telemedizin.git
-- Install dependencies: `docker run --rm \
+- Repository klonen git clone https://github.com/klas/telemedizin.git
+- Abhängigkeiten installieren: `docker run --rm \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):/var/www/html" \
   -w /var/www/html \
   laravelsail/php84-composer:latest \
   composer install --ignore-platform-reqs`
-- If some Classes are missing: `docker run --rm --interactive --tty --volume $PWD:/app composer dump-autoload`
-- copy .env-file: `cp .env.example .env`
-- Start the Container: `vendor/bin/sail up -d`
-- Run migrations und seeders: `vendor/bin/sail artisan migrate:fresh --seed`
-
-## Testing
-* Run tests `vendor/bin/sail artisan test`
-
-Die API ist nun unter `http://localhost:80` verfügbar.
+- Wenn einige Classes fehlen: `docker run --rm --interactive --tty --volume $PWD:/app composer dump-autoload`
+- .env-Datei kopieren: `cp .env.example .env`
+- Den Container starten: `vendor/bin/sail up -d`
+- Migrationen und Seeder ausführen: `vendor/bin/sail artisan migrate:fresh --seed`
 
 ## API-Endpunkte
+
+Die API ist nun unter `http://localhost` verfügbar.
 
 ### Ärzte
 
@@ -60,7 +56,7 @@ Die API ist nun unter `http://localhost:80` verfügbar.
 ### Termin erstellen
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/appointments \
+curl -X POST http://localhost/api/v1/appointments \
   -H "Content-Type: application/json" \
   -d '{
     "doctor_id": 1,
@@ -73,13 +69,13 @@ curl -X POST http://localhost:8000/api/v1/appointments \
 ### Verfügbare Zeitslots abrufen
 
 ```bash
-curl -X GET "http://localhost:8000/api/v1/time-slots?doctor_id=1&datum=2025-03-20"
+curl -X GET "http://localhost/api/v1/time-slots?doctor_id=1&datum=2025-03-20"
 ```
 
 ### Nach Ärzten suchen
 
 ```bash
-curl -X GET "http://localhost:8000/api/v1/doctors/search?suche=Kardiologie"
+curl -X GET "http://localhost/api/v1/doctors/search?suche=Kardiologie"
 ```
 
 ## Testen
@@ -87,7 +83,7 @@ curl -X GET "http://localhost:8000/api/v1/doctors/search?suche=Kardiologie"
 Unit-Tests können mit folgendem Befehl ausgeführt werden:
 
 ```bash
-php artisan test
+vendor/bin/sail artisan test
 ```
 
 ## Datenmodell
@@ -99,11 +95,6 @@ php artisan test
 
 
 ## Fehlerbehebung
-
-### API gibt 500-Fehler zurück
-- Überprüfen Sie die Laravel-Logs unter `storage/logs/laravel.log`
-- Stellen Sie sicher, dass die Datenbankverbindung korrekt konfiguriert ist
-- Überprüfen Sie, ob alle Migrationen erfolgreich ausgeführt wurden
 
 ### E-Mails werden nicht gesendet
 - Überprüfen Sie Ihre Mail-Konfiguration in der `.env`-Datei
