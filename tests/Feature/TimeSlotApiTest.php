@@ -65,7 +65,7 @@ class TimeSlotApiTest extends TestCase
             'time_slot_id' => $timeSlot->id,
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'erfolg' => false,
             'nachricht' => 'Termin ist nicht mehr verfügbar',

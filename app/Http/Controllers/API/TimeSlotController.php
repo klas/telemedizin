@@ -30,6 +30,9 @@ class TimeSlotController extends Controller
         ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function checkRealTimeAvailability(CheckRealTimeAvailabilityRequest $request)
     {
         $timeSlotId = $request->input('time_slot_id');
@@ -47,7 +50,7 @@ class TimeSlotController extends Controller
             return response()->json([
                 'erfolg' => $isAvailable,
                 'nachricht' => $isAvailable ? 'Termin ist verfügbar' : 'Termin ist nicht mehr verfügbar'
-            ]);
+            ], $isAvailable ? 200 : 422);
         } catch (\Exception $e) {
             \DB::rollBack();
 

@@ -41,9 +41,9 @@ class AppointmentRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
+            'erfolg'   => false,
+            'nachricht'   => 'Validation errors',
+            'fehler'      => $validator->errors()
         ]));
     }
 }

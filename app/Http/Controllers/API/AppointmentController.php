@@ -41,6 +41,9 @@ class AppointmentController extends Controller
         ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function store(AppointmentRequest $request)
     {
         // Begin transaction to ensure data consistency
