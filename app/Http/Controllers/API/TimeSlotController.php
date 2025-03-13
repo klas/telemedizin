@@ -1,26 +1,20 @@
 <?php
 
+// app/Http/Controllers/API/TimeSlotController.php
+
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetAvailableTimeSlotsRequest;
+use App\Http\Requests\CheckRealTimeAvailabilityRequest;
 use App\Models\TimeSlot;
-use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class TimeSlotController extends Controller
 {
-    public function getAvailableSlots(Request $request)
+    public function getAvailableSlots(GetAvailableTimeSlotsRequest $request)
     {
-        $request->validate([
-            'doctor_id' => 'required|exists:doctors,id',
-            'datum' => 'date',
-        ], [
-            'doctor_id.required' => 'Die Arzt-ID ist erforderlich.',
-            'doctor_id.exists' => 'Der ausgewählte Arzt existiert nicht.',
-            'datum.date' => 'Bitte geben Sie ein gültiges Datum ein.',
-        ]);
-
         $doctorId = $request->input('doctor_id');
         $date = $request->has('datum')
             ? Carbon::parse($request->input('datum'))->startOfDay()
@@ -39,15 +33,8 @@ class TimeSlotController extends Controller
         ]);
     }
 
-    public function checkRealTimeAvailability(Request $request)
+    public function checkRealTimeAvailability(CheckRealTimeAvailabilityRequest $request)
     {
-        $request->validate([
-            'time_slot_id' => 'required|exists:time_slots,id',
-        ], [
-            'time_slot_id.required' => 'Die Terminzeit-ID ist erforderlich.',
-            'time_slot_id.exists' => 'Die ausgewählte Terminzeit existiert nicht.',
-        ]);
-
         $timeSlotId = $request->input('time_slot_id');
 
         // Use a transaction to prevent race conditions
