@@ -8,6 +8,8 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AppointmentRequest extends FormRequest
 {
+    use RequestHelper;
+
     public function authorize()
     {
         return true; // Public API, no authentication
@@ -35,15 +37,5 @@ class AppointmentRequest extends FormRequest
             'date_time.date' => 'Bitte geben Sie ein gültiges Datum und Uhrzeit ein.',
             'date_time.after' => 'Datum und Uhrzeit müssen in der Zukunft liegen.',
         ];
-    }
-
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'erfolg'   => false,
-            'nachricht'   => 'Validation errors',
-            'fehler'      => $validator->errors()
-        ]));
     }
 }

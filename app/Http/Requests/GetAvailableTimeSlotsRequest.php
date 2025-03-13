@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class GetAvailableTimeSlotsRequest extends FormRequest
 {
+    use RequestHelper;
+
     public function rules()
     {
         return [
