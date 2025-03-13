@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Specialization;
 use App\Models\TimeSlot;
-use App\Models\Appointment;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

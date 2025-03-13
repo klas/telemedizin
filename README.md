@@ -12,83 +12,24 @@ Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Dies
 - Suchfunktion für Ärzte
 - Alle Benutzeroberflächen-Texte auf Deutsch
 
-## Technische Anforderungen
-
-- PHP 8.1 oder höher
-- Composer
-- MySQL oder eine andere Laravel-kompatible Datenbank
-- Laravel 10.x
-
 ## Installation
 
-### 1. Repository klonen
+- Clone the Repo git clone https://github.com/klas/telemedizin.git
+- Install dependencies: `docker run --rm \
+  -u "$(id -u):$(id -g)" \
+  -v "$(pwd):/var/www/html" \
+  -w /var/www/html \
+  laravelsail/php84-composer:latest \
+  composer install --ignore-platform-reqs`
+- If some Classes are missing: `docker run --rm --interactive --tty --volume $PWD:/app composer dump-autoload`
+- copy .env-file: `cp .env.example .env`
+- Start the Container: `vendor/bin/sail up -d`
+- Run migrations und seeders: `vendor/bin/sail artisan migrate:fresh --seed`
 
-```bash
-git clone https://github.com/username/telemedizin-api.git
-cd telemedizin-api
-```
+## Testing
+* Run tests `vendor/bin/sail artisan test`
 
-### 2. Abhängigkeiten installieren
-
-```bash
-composer install
-```
-
-### 3. Umgebungsvariablen konfigurieren
-
-```bash
-cp .env.example .env
-```
-
-Bearbeiten Sie die `.env`-Datei und konfigurieren Sie Ihre Datenbankverbindung:
-
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=telemedizin
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-Für E-Mail-Funktionalität, konfigurieren Sie auch die Mail-Einstellungen:
-
-```
-MAIL_MAILER=smtp
-MAIL_HOST=mailhog
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS="noreply@telemedizin.de"
-MAIL_FROM_NAME="${APP_NAME}"
-```
-
-### 4. Anwendungsschlüssel generieren
-
-```bash
-php artisan key:generate
-```
-
-### 5. Datenbank-Migrationen ausführen
-
-```bash
-php artisan migrate
-```
-
-### 6. (Optional) Seed-Daten einfügen
-
-```bash
-php artisan db:seed
-```
-
-## Starten der Anwendung
-
-```bash
-php artisan serve
-```
-
-Die API ist nun unter `http://localhost:8000` verfügbar.
+Die API ist nun unter `http://localhost:80` verfügbar.
 
 ## API-Endpunkte
 
@@ -149,16 +90,6 @@ Unit-Tests können mit folgendem Befehl ausgeführt werden:
 php artisan test
 ```
 
-## Datenbank-Seeding
-
-Um Testdaten zu erstellen, können Sie folgende Befehle ausführen:
-
-```bash
-php artisan db:seed --class=SpecializationSeeder
-php artisan db:seed --class=DoctorSeeder
-php artisan db:seed --class=TimeSlotSeeder
-```
-
 ## Datenmodell
 
 - **Doctor**: `id`, `name`, `specialization_id`
@@ -166,49 +97,6 @@ php artisan db:seed --class=TimeSlotSeeder
 - **Appointment**: `id`, `doctor_id`, `patient_name`, `patient_email`, `date_time`, `status`
 - **TimeSlot**: `id`, `doctor_id`, `start_time`, `end_time`, `is_available`
 
-## Benutzerdefinierte Seeder
-
-Sie können Seeders für Ihre Testdaten erstellen:
-
-```bash
-php artisan make:seeder SpecializationSeeder
-php artisan make:seeder DoctorSeeder
-php artisan make:seeder TimeSlotSeeder
-```
-
-Beispielinhalt für `database/seeders/SpecializationSeeder.php`:
-
-```php
-<?php
-
-namespace Database\Seeders;
-
-use App\Models\Specialization;
-use Illuminate\Database\Seeder;
-
-class SpecializationSeeder extends Seeder
-{
-    public function run()
-    {
-        $specializations = [
-            'Allgemeinmedizin',
-            'Kardiologie',
-            'Dermatologie',
-            'Neurologie',
-            'Orthopädie',
-            'Pädiatrie',
-            'Psychiatrie',
-            'Urologie',
-            'Gynäkologie',
-            'Onkologie'
-        ];
-
-        foreach ($specializations as $name) {
-            Specialization::create(['name' => $name]);
-        }
-    }
-}
-```
 
 ## Fehlerbehebung
 
@@ -222,5 +110,4 @@ class SpecializationSeeder extends Seeder
 - Für die lokale Entwicklung empfehlen wir [Mailhog](https://github.com/mailhog/MailHog)
 
 ## Lizenz
-
 Dieses Projekt ist unter der MIT-Lizenz lizenziert.
