@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GetAvailableTimeSlotsRequest;
 use App\Http\Requests\CheckRealTimeAvailabilityRequest;
 use App\Models\TimeSlot;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class TimeSlotController extends Controller
@@ -47,10 +46,7 @@ class TimeSlotController extends Controller
 
             return response()->json([
                 'erfolg' => $isAvailable,
-                'nachricht' => $isAvailable ? 'Termin ist verfügbar' : 'Termin ist nicht mehr verfügbar',
-                'daten' => [
-                    'ist_verfuegbar' => $isAvailable
-                ]
+                'nachricht' => $isAvailable ? 'Termin ist verfügbar' : 'Termin ist nicht mehr verfügbar'
             ]);
         } catch (\Exception $e) {
             \DB::rollBack();

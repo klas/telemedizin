@@ -6,7 +6,7 @@ Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Dies
 
 - Verwaltung von Ärzten und deren Fachgebieten
 - Terminbuchung und -stornierung
-- Verfügbare Zeitslots abrufen
+- Verfügbare Zeitfwenster abrufen
 - Echtzeit-Verfügbarkeitsprüfung
 - E-Mail-Benachrichtigungen für Terminbestätigungen
 - Suchfunktion für Ärzte und Fachgebiete
@@ -29,17 +29,7 @@ Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Dies
 
 Die API ist nun unter `http://localhost` verfügbar.
 
-### Ärzte
-
-- `GET /api/v1/doctors` - Alle Ärzte abrufen
-- `GET /api/v1/doctors/{id}` - Einen bestimmten Arzt abrufen
-- `GET /api/v1/doctors?search={suchbegriff}` - Ärzte nach Name oder Fachgebiet suchen
-
-### Fachgebiete
-
-- `GET /api/v1/specializations` - Alle Fachgebiete abrufen
-
-### Zeitslots
+### Zeitfenster
 
 - `GET /api/v1/time-slots?doctor_id={id}&datum={datum}` - Verfügbare Zeitslots für einen Arzt abrufen
 - `POST /api/v1/time-slots/check-availability` - Echtzeit-Verfügbarkeit eines Zeitslots prüfen
@@ -51,7 +41,23 @@ Die API ist nun unter `http://localhost` verfügbar.
 - `POST /api/v1/appointments` - Einen neuen Termin erstellen
 - `PUT /api/v1/appointments/{id}/cancel` - Einen Termin stornieren
 
+### Ärzte
+
+- `GET /api/v1/doctors` - Alle Ärzte abrufen
+- `GET /api/v1/doctors/{id}` - Einen bestimmten Arzt abrufen
+- `GET /api/v1/doctors?search={suchbegriff}` - Ärzte nach Name oder Fachgebiet suchen
+
+### Fachgebiete
+
+- `GET /api/v1/specializations` - Alle Fachgebiete abrufen
+
 ## Beispielanfragen
+
+### Verfügbare Zeitfenster abrufen
+
+```bash
+curl -X GET "http://localhost/api/v1/time-slots?doctor_id=1&datum=2025-03-20"
+```
 
 ### Termin erstellen
 
@@ -64,12 +70,6 @@ curl -X POST http://localhost/api/v1/appointments \
     "patient_email": "max@example.com",
     "date_time": "2025-03-20 14:30:00"
   }'
-```
-
-### Verfügbare Zeitslots abrufen
-
-```bash
-curl -X GET "http://localhost/api/v1/time-slots?doctor_id=1&datum=2025-03-20"
 ```
 
 ### Nach Ärzten suchen
@@ -92,13 +92,6 @@ vendor/bin/sail artisan test
 - **Specialization**: `id`, `name`
 - **Appointment**: `id`, `doctor_id`, `patient_name`, `patient_email`, `date_time`, `status`
 - **TimeSlot**: `id`, `doctor_id`, `start_time`, `end_time`, `is_available`
-
-
-## Fehlerbehebung
-
-### E-Mails werden nicht gesendet
-- Überprüfen Sie Ihre Mail-Konfiguration in der `.env`-Datei
-- Für die lokale Entwicklung empfehlen wir [Mailhog](https://github.com/mailhog/MailHog)
 
 ## Lizenz
 Dieses Projekt ist unter der MIT-Lizenz lizenziert.
