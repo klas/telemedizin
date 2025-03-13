@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/API/TimeSlotController.php
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -48,7 +46,7 @@ class TimeSlotController extends Controller
             \DB::commit();
 
             return response()->json([
-                'erfolg' => true,
+                'erfolg' => $isAvailable,
                 'nachricht' => $isAvailable ? 'Termin ist verfügbar' : 'Termin ist nicht mehr verfügbar',
                 'daten' => [
                     'ist_verfuegbar' => $isAvailable
