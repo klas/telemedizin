@@ -27,7 +27,7 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function show($id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $doctor = Doctor::with('specialization')->find($id);
 

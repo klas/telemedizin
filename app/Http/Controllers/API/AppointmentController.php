@@ -27,7 +27,7 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function show($id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $appointment = Appointment::with('doctor.specialization')->find($id);
 
@@ -107,7 +107,7 @@ class AppointmentController extends Controller
     /**
      * @throws Throwable
      */
-    public function cancel($id): JsonResponse
+    public function cancel(int $id): JsonResponse
     {
         // Begin transaction to ensure data consistency
         DB::beginTransaction();

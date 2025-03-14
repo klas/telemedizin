@@ -16,7 +16,7 @@ class TimeSlotController extends Controller
 {
     public function getAvailableSlots(GetAvailableTimeSlotsRequest $request): JsonResponse
     {
-        $doctorId = $request->input('doctor_id');
+        $doctorId = $request->integer('doctor_id');
         $date = $request->has('datum')
             ? Carbon::parse($request->input('datum'))->startOfDay()
             : Carbon::now()->startOfDay();
