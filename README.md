@@ -1,6 +1,6 @@
 # Telemedizin API
 
-Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Diese API ermöglicht das Verwalten von Ärzten, Fachgebieten, Terminen und Zeitslots für Telemedizin-Konsultationen.
+RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. 
 
 ## Funktionen
 
@@ -8,7 +8,7 @@ Eine RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel. Dies
 - Terminbuchung und -stornierung
 - Verfügbare Zeitfwenster abrufen
 - Echtzeit-Verfügbarkeitsprüfung
-- E-Mail-Benachrichtigungen für Terminbestätigungen
+- E-Mail-Benachrichtigungen für Terminbestätigungen (Faked, nur Log Einträge)
 - Suchfunktion für Ärzte und Fachgebiete
 
 ## Installation
@@ -32,7 +32,7 @@ Die API ist nun unter `http://localhost` verfügbar.
 ### Zeitfenster
 
 - `GET /api/v1/time-slots?doctor_id={id}&datum={datum}` - Verfügbare Zeitslots für einen Arzt abrufen
-- `POST /api/v1/time-slots/check-availability` - Echtzeit-Verfügbarkeit eines Zeitslots prüfen
+- `GET /api/v1/time-slots/check-availability/{id}` - Echtzeit-Verfügbarkeit eines Zeitslots prüfen. 
 
 ### Termine
 

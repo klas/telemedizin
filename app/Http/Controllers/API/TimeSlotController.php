@@ -37,16 +37,13 @@ class TimeSlotController extends Controller
     /**
      * @throws Throwable
      */
-    public function checkRealTimeAvailability(CheckRealTimeAvailabilityRequest $request): JsonResponse
+    public function checkRealTimeAvailability(int $id): JsonResponse
     {
-        $timeSlotId = $request->input('time_slot_id');
-
         // Use a transaction to prevent race conditions
         DB::beginTransaction();
 
         try {
-            $timeSlot = TimeSlot::lockForUpdate()->find($timeSlotId);
-
+            $timeSlot = TimeSlot::lockForUpdate()->find($id);
             $isAvailable = $timeSlot && $timeSlot->is_available;
 
             DB::commit();

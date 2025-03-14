@@ -13,7 +13,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/specializations', [SpecializationController::class, 'index']);
 
     Route::get('/time-slots', [TimeSlotController::class, 'getAvailableSlots']);
-    Route::post('/time-slots/check-availability', [TimeSlotController::class, 'checkRealTimeAvailability']);
+    Route::get('/time-slots/check-availability/{id}', [TimeSlotController::class, 'checkRealTimeAvailability']);
 
     Route::get('/appointments', [AppointmentController::class, 'index']);
     Route::get('/appointments/{id}', [AppointmentController::class, 'show']);

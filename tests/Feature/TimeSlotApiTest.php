@@ -8,6 +8,7 @@ use App\Models\TimeSlot;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use function Psy\debug;
 
 class TimeSlotApiTest extends TestCase
 {
@@ -46,9 +47,7 @@ class TimeSlotApiTest extends TestCase
     {
         $timeSlot = TimeSlot::factory()->create(['is_available' => true]);
 
-        $response = $this->postJson('/api/v1/time-slots/check-availability', [
-            'time_slot_id' => $timeSlot->id,
-        ]);
+        $response = $this->getJson('/api/v1/time-slots/check-availability/' . $timeSlot->id);
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -60,10 +59,8 @@ class TimeSlotApiTest extends TestCase
     public function test_if_time_slot_not_found()
     {
         $timeSlot = TimeSlot::factory()->create(['is_available' => false]);
-
-        $response = $this->postJson('/api/v1/time-slots/check-availability', [
-            'time_slot_id' => $timeSlot->id,
-        ]);
+dump($timeSlot->id);
+        $response = $this->getJson('/api/v1/time-slots/check-availability/' . $timeSlot->id);
 
         $response->assertStatus(422);
         $response->assertJson([
