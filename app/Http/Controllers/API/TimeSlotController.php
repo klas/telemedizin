@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GetAvailableTimeSlotsRequest;
-use App\Http\Requests\CheckRealTimeAvailabilityRequest;
 use App\Models\TimeSlot;
 use Carbon\Carbon;
 use DB;
