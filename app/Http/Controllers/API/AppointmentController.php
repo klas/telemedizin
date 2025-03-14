@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
+use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Models\TimeSlot;
 use App\Mail\AppointmentConfirmation;
@@ -23,7 +24,7 @@ class AppointmentController extends Controller
         return response()->json([
             'erfolg' => true,
             'nachricht' => 'Termine erfolgreich abgerufen',
-            'daten' => $appointments
+            'daten' => AppointmentResource::collection($appointments)
         ]);
     }
 
@@ -41,7 +42,7 @@ class AppointmentController extends Controller
         return response()->json([
             'erfolg' => true,
             'nachricht' => 'Termin erfolgreich abgerufen',
-            'daten' => $appointment
+            'daten' => new AppointmentResource($appointment)
         ]);
     }
 
@@ -91,7 +92,7 @@ class AppointmentController extends Controller
             return response()->json([
                 'erfolg' => true,
                 'nachricht' => 'Termin erfolgreich erstellt',
-                'daten' => $appointment
+                'daten' => new AppointmentResource($appointment)
             ], 201);
         } catch (Exception $e) {
             DB::rollBack();
@@ -143,7 +144,7 @@ class AppointmentController extends Controller
             return response()->json([
                 'erfolg' => true,
                 'nachricht' => 'Termin erfolgreich storniert',
-                'daten' => $appointment
+                'daten' => new AppointmentResource($appointment)
             ]);
         } catch (Exception $e) {
             DB::rollBack();

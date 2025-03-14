@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SpecializationResource;
 use App\Models\Specialization;
 use Illuminate\Http\JsonResponse;
 
@@ -15,7 +16,7 @@ class SpecializationController extends Controller
         return response()->json([
             'erfolg' => true,
             'nachricht' => 'Fachgebiete erfolgreich abgerufen',
-            'daten' => $specializations
+            'daten' => SpecializationResource::collection($specializations)
         ]);
     }
 }

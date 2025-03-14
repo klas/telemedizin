@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GetAvailableTimeSlotsRequest;
+use App\Http\Resources\TimeSlotResource;
 use App\Models\TimeSlot;
 use Carbon\Carbon;
 use DB;
@@ -29,7 +30,7 @@ class TimeSlotController extends Controller
         return response()->json([
             'erfolg' => true,
             'nachricht' => 'Verfügbare Zeitfenster erfolgreich abgerufen',
-            'daten' => $timeSlots
+            'daten' => TimeSlotResource::collection($timeSlots)
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\DoctorResource;
 use App\Models\Doctor;
 use App\Models\Specialization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,11 +18,17 @@ class DoctorApiTest extends TestCase
 
         $response = $this->getJson('/api/v1/doctors');
 
+        $daten = DoctorResource::collection($doctors)->resolve();
+
+        foreach ($daten as &$data) {
+            $data['specialization'] = $data['specialization']->resolve();
+        }
+
         $response->assertStatus(200);
         $response->assertJson([
             'erfolg' => true,
             'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => $doctors->toArray(),
+            'daten' => $daten
         ]);
     }
 
@@ -33,10 +40,17 @@ class DoctorApiTest extends TestCase
         $response = $this->getJson('/api/v1/doctors?search=Doe');
 
         $response->assertStatus(200);
+
+        $daten1 = (new DoctorResource($doctor1))->resolve();
+        $daten1['specialization'] = $daten1['specialization']->resolve();
+
+        $daten2 = (new DoctorResource($doctor2))->resolve();
+        $daten2['specialization'] = $daten2['specialization']->resolve();
+
         $response->assertJson([
             'erfolg' => true,
             'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => [$doctor1->toArray(), $doctor2->toArray()],
+            'daten' => [$daten1, $daten2],
         ]);
     }
 
@@ -48,10 +62,13 @@ class DoctorApiTest extends TestCase
         $response = $this->getJson('/api/v1/doctors?search=Cardiology');
 
         $response->assertStatus(200);
+        $daten = (new DoctorResource($doctor))->resolve();
+        $daten['specialization'] = $daten['specialization']->resolve();
+
         $response->assertJson([
             'erfolg' => true,
             'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => [$doctor->toArray()],
+            'daten' => [$daten]
         ]);
     }
 
@@ -62,10 +79,13 @@ class DoctorApiTest extends TestCase
         $response = $this->getJson('/api/v1/doctors/' . $doctor->id);
 
         $response->assertStatus(200);
+        $daten = (new DoctorResource($doctor))->resolve();
+        $daten['specialization'] = $daten['specialization']->resolve();
+
         $response->assertJson([
             'erfolg' => true,
             'nachricht' => 'Arzt erfolgreich abgerufen',
-            'daten' => $doctor->toArray(),
+            'daten' => $daten
         ]);
     }
 

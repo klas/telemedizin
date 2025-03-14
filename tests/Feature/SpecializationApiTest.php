@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\SpecializationResource;
 use App\Models\Specialization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -20,7 +21,7 @@ class SpecializationApiTest extends TestCase
         $response->assertJson([
             'erfolg' => true,
             'nachricht' => 'Fachgebiete erfolgreich abgerufen',
-            'daten' => $specializations->toArray(),
+            'daten' => SpecializationResource::collection($specializations)->resolve(),
         ]);
     }
 }

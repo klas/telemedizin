@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DoctorResource;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,7 @@ class DoctorController extends Controller
         return response()->json([
             'erfolg' => true,
             'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => $doctors->get()
+            'daten' => DoctorResource::collection($doctors->get())
         ]);
     }
 
@@ -41,7 +42,7 @@ class DoctorController extends Controller
         return response()->json([
             'erfolg' => true,
             'nachricht' => 'Arzt erfolgreich abgerufen',
-            'daten' => $doctor
+            'daten' => new DoctorResource($doctor)
         ]);
     }
 }
