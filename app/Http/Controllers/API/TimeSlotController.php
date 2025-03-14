@@ -28,7 +28,7 @@ class TimeSlotController extends Controller
 
         return response()->json([
             'erfolg' => true,
-            'nachricht' => 'Verfügbare Termine erfolgreich abgerufen',
+            'nachricht' => 'Verfügbare Zeitfenster erfolgreich abgerufen',
             'daten' => $timeSlots
         ]);
     }
@@ -49,7 +49,7 @@ class TimeSlotController extends Controller
 
             return response()->json([
                 'erfolg' => $isAvailable,
-                'nachricht' => $isAvailable ? 'Termin ist verfügbar' : 'Termin ist nicht mehr verfügbar'
+                'nachricht' => $isAvailable ? 'Zeitfenster ist verfügbar' : 'Zeitfenster ist nicht mehr verfügbar'
             ], $isAvailable ? 200 : 422);
         } catch (Exception $e) {
             DB::rollBack();

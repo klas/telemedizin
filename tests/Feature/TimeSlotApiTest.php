@@ -51,7 +51,7 @@ class TimeSlotApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'erfolg' => true,
-            'nachricht' => 'Termin ist verfügbar',
+            'nachricht' => 'Zeitfenster ist verfügbar',
         ]);
     }
 
@@ -64,7 +64,7 @@ class TimeSlotApiTest extends TestCase
         $response->assertStatus(422);
         $response->assertJson([
             'erfolg' => false,
-            'nachricht' => 'Termin ist nicht mehr verfügbar',
+            'nachricht' => 'Zeitfenster ist nicht mehr verfügbar',
         ]);
     }
 }

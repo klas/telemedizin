@@ -31,8 +31,8 @@ Die API ist nun unter `http://localhost` verfügbar.
 
 ### Zeitfenster
 
-- `GET /api/v1/time-slots?doctor_id={id}&datum={datum}` - Verfügbare Zeitslots für einen Arzt abrufen
-- `GET /api/v1/time-slots/check-availability/{id}` - Echtzeit-Verfügbarkeit eines Zeitslots prüfen. 
+- `GET /api/v1/time-slots?doctor_id={id}&datum={datum}` - Verfügbare Zeitfenster für einen Arzt abrufen
+- `GET /api/v1/time-slots/check-availability/{id}` - Echtzeit-Verfügbarkeit eines Zeitfensters prüfen. 
 
 ### Termine
 
