@@ -11,7 +11,7 @@ class GetAvailableTimeSlotsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'doctor_id' => 'required|exists:doctors,id',
+            'doctor_id' => 'required|integer|exists:doctors,id',
             'datum' => 'date',
         ];
     }

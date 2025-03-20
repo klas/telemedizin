@@ -54,11 +54,14 @@ class AppointmentController extends Controller
         // Begin transaction to ensure data consistency
         DB::beginTransaction();
 
+        // Validate the request
+        $validated = $request->validated();
+
         try {
             // Check if the time slot is available
-            $timeSlot = TimeSlot::where('doctor_id', $request->doctor_id)
-                ->where('start_time', '<=', $request->date_time)
-                ->where('end_time', '>=', $request->date_time)
+            $timeSlot = TimeSlot::where('doctor_id', $validated['doctor_id'] )
+                ->where('start_time', '<=', $validated['date_time'])
+                ->where('end_time', '>=', $validated['date_time'])
                 ->where('is_available', true)
                 ->lockForUpdate()
                 ->first();
@@ -73,10 +76,10 @@ class AppointmentController extends Controller
 
             // Create the appointment
             $appointment = Appointment::create([
-                'doctor_id' => $request->doctor_id,
-                'patient_name' => $request->patient_name,
-                'patient_email' => $request->patient_email,
-                'date_time' => $request->date_time,
+                'doctor_id' => $validated['doctor_id'],
+                'patient_name' => $validated['patient_name'],
+                'patient_email' => $validated['patient_email'],
+                'date_time' => $validated['date_time'],
                 'status' => 'geplant'
             ]);
 
