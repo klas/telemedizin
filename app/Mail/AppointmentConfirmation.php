@@ -18,7 +18,7 @@ class AppointmentConfirmation extends Mailable
         $this->appointment = $appointment;
     }
 
-    public function build()
+    public function build(): self
     {
         return $this->subject('Bestätigung Ihres Telemedizin-Termins')
                     ->view('emails.appointment-confirmation');

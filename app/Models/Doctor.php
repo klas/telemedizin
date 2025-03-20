@@ -13,11 +13,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  *
  *
- * @property-read Collection<int, \App\Models\Appointment> $appointments
- * @property-read int|null                                                               $appointments_count
- * @property-read Specialization|null                                        $specialization
- * @property-read Collection<int, \App\Models\TimeSlot>    $timeSlots
- * @property-read int|null                                                               $time_slots_count
+ * @property-read Collection<int, Appointment> $appointments
+ * @property-read int|null $appointments_count
+ * @property-read Specialization|null $specialization
+ * @property-read Collection<int, TimeSlot> $timeSlots
+ * @property-read int|null $time_slots_count
  * @method static Builder<static>|Doctor newModelQuery()
  * @method static Builder<static>|Doctor newQuery()
  * @method static Builder<static>|Doctor query()

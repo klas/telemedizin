@@ -3,17 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AppointmentRequest extends FormRequest
 {
     use RequestHelper;
-
-    public function authorize()
-    {
-        return true; // Public API, no authentication
-    }
 
     public function rules(): array
     {
