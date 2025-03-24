@@ -19,9 +19,9 @@ class SpecializationApiTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'erfolg' => true,
-            'nachricht' => 'Fachgebiete erfolgreich abgerufen',
-            'daten' => SpecializationResource::collection($specializations)->resolve(),
+            'success' => true,
+            'message' => 'Fachgebiete erfolgreich abgerufen',
+            'data' => SpecializationResource::collection($specializations)->resolve(),
         ]);
     }
 }

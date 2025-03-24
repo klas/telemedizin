@@ -40,13 +40,13 @@ class AppointmentApiTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'erfolg',
-                'nachricht',
-                'daten' => ['id', 'doctor', 'patient_name', 'patient_email', 'time_slot', 'status']
+                'success',
+                'message',
+                'data' => ['id', 'doctor', 'patient_name', 'patient_email', 'time_slot', 'status']
             ])
             ->assertJson([
-                'erfolg' => true,
-                'daten' => [
+                'success' => true,
+                'data' => [
                     'patient_name' => 'Max Mustermann',
                     'status' => 'geplant'
                 ]
@@ -88,13 +88,13 @@ class AppointmentApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'erfolg',
-                'nachricht',
-                'daten' => ['id', 'doctor', 'patient_name', 'patient_email', 'time_slot', 'status']
+                'success',
+                'message',
+                'data' => ['id', 'doctor', 'patient_name', 'patient_email', 'time_slot', 'status']
             ])
             ->assertJson([
-                'erfolg' => true,
-                'daten' => [
+                'success' => true,
+                'data' => [
                     'status' => 'storniert'
                 ]
             ]);

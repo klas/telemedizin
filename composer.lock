@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7067c54785469446b073e851c3f805b",
+    "content-hash": "45130b0b47c7b3750d3683c7285f7b71",
     "packages": [
         {
             "name": "brick/math",
@@ -1053,6 +1053,67 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
+        },
+        {
+            "name": "hamidreza2005/laravel-api-error-handler",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klas/laravel-api-error-handler.git",
+                "reference": "92e0de62917a942d9740a811df58ecc06c7e2827"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klas/laravel-api-error-handler/zipball/92e0de62917a942d9740a811df58ecc06c7e2827",
+                "reference": "92e0de62917a942d9740a811df58ecc06c7e2827",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "*"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.10"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "hamidreza2005\\LaravelApiErrorHandler\\LaravelApiErrorHandlerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "hamidreza2005\\LaravelApiErrorHandler\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "hamidreza2005\\LaravelApiErrorHandler\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hamidreza Hassani",
+                    "email": "h.r.hassani2005@gmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "a package for handle api errors",
+            "keywords": [
+                "api-error-handler",
+                "error-handling",
+                "laravel",
+                "laravel-api-error-handler"
+            ],
+            "support": {
+                "source": "https://github.com/klas/laravel-api-error-handler/tree/main"
+            },
+            "time": "2025-03-24T21:42:38+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8427,7 +8488,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "hamidreza2005/laravel-api-error-handler": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

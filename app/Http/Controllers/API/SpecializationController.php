@@ -14,9 +14,9 @@ class SpecializationController extends Controller
         $specializations = Specialization::all();
 
         return response()->json([
-            'erfolg' => true,
-            'nachricht' => 'Fachgebiete erfolgreich abgerufen',
-            'daten' => SpecializationResource::collection($specializations)
+            'success' => true,
+            'message' => 'Fachgebiete erfolgreich abgerufen',
+            'data' => SpecializationResource::collection($specializations)
         ]);
     }
 }

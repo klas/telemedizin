@@ -18,17 +18,17 @@ class DoctorApiTest extends TestCase
 
         $response = $this->getJson('/api/v1/doctors');
 
-        $daten = DoctorResource::collection($doctors)->resolve();
+        $doctors = DoctorResource::collection($doctors)->resolve();
 
-        foreach ($daten as &$data) {
+        foreach ($doctors as &$data) {
             $data['specialization'] = $data['specialization']->resolve();
         }
 
         $response->assertStatus(200);
         $response->assertJson([
-            'erfolg' => true,
-            'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => $daten
+            'success' => true,
+            'message' => 'Ärzte erfolgreich abgerufen',
+            'data' => $doctors
         ]);
     }
 
@@ -48,9 +48,9 @@ class DoctorApiTest extends TestCase
         $daten2['specialization'] = $daten2['specialization']->resolve();
 
         $response->assertJson([
-            'erfolg' => true,
-            'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => [$daten1, $daten2],
+            'success' => true,
+            'message' => 'Ärzte erfolgreich abgerufen',
+            'data' => [$daten1, $daten2],
         ]);
     }
 
@@ -66,9 +66,9 @@ class DoctorApiTest extends TestCase
         $daten['specialization'] = $daten['specialization']->resolve();
 
         $response->assertJson([
-            'erfolg' => true,
-            'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => [$daten]
+            'success' => true,
+            'message' => 'Ärzte erfolgreich abgerufen',
+            'data' => [$daten]
         ]);
     }
 
@@ -83,9 +83,9 @@ class DoctorApiTest extends TestCase
         $daten['specialization'] = $daten['specialization']->resolve();
 
         $response->assertJson([
-            'erfolg' => true,
-            'nachricht' => 'Arzt erfolgreich abgerufen',
-            'daten' => $daten
+            'success' => true,
+            'message' => 'Arzt erfolgreich abgerufen',
+            'data' => $daten
         ]);
     }
 
@@ -95,8 +95,8 @@ class DoctorApiTest extends TestCase
 
         $response->assertStatus(404);
         $response->assertJson([
-            'erfolg' => false,
-            'nachricht' => 'Arzt nicht gefunden',
+            'success' => false,
+            'message' => 'Not Found !',
         ]);
     }
 }

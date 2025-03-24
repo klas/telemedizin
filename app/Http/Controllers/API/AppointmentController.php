@@ -22,9 +22,9 @@ class AppointmentController extends Controller
         $appointments = Appointment::with('doctor.specialization')->get();
 
         return response()->json([
-            'erfolg' => true,
-            'nachricht' => 'Termine erfolgreich abgerufen',
-            'daten' => AppointmentResource::collection($appointments)
+            'success' => true,
+            'message' => 'Termine erfolgreich abgerufen',
+            'data' => AppointmentResource::collection($appointments)
         ]);
     }
 
@@ -34,15 +34,15 @@ class AppointmentController extends Controller
 
         if (!$appointment) {
             return response()->json([
-                'erfolg' => false,
-                'nachricht' => 'Termin nicht gefunden'
+                'success' => false,
+                'message' => 'Termin nicht gefunden'
             ], 404);
         }
 
         return response()->json([
-            'erfolg' => true,
-            'nachricht' => 'Termin erfolgreich abgerufen',
-            'daten' => new AppointmentResource($appointment)
+            'success' => true,
+            'message' => 'Termin erfolgreich abgerufen',
+            'data' => new AppointmentResource($appointment)
         ]);
     }
 
@@ -69,8 +69,8 @@ class AppointmentController extends Controller
             if (!$timeSlot) {
                 DB::rollBack();
                 return response()->json([
-                    'erfolg' => false,
-                    'nachricht' => 'Der gewählte Termin ist nicht verfügbar'
+                    'success' => false,
+                    'message' => 'Der gewählte Termin ist nicht verfügbar'
                 ], 422);
             }
 
@@ -93,16 +93,16 @@ class AppointmentController extends Controller
             $this->sendAppointmentConfirmation($appointment);
 
             return response()->json([
-                'erfolg' => true,
-                'nachricht' => 'Termin erfolgreich erstellt',
-                'daten' => new AppointmentResource($appointment)
+                'success' => true,
+                'message' => 'Termin erfolgreich erstellt',
+                'data' => new AppointmentResource($appointment)
             ], 201);
         } catch (Exception $e) {
             DB::rollBack();
 
             return response()->json([
-                'erfolg' => false,
-                'nachricht' => 'Fehler beim Erstellen des Termins',
+                'success' => false,
+                'message' => 'Fehler beim Erstellen des Termins',
                 'fehler' => $e->getMessage()
             ], 500);
         }
@@ -122,8 +122,8 @@ class AppointmentController extends Controller
             if ($appointment->status === 'storniert') {
                 DB::rollBack();
                 return response()->json([
-                    'erfolg' => false,
-                    'nachricht' => 'Dieser Termin wurde bereits storniert'
+                    'success' => false,
+                    'message' => 'Dieser Termin wurde bereits storniert'
                 ], 422);
             }
 
@@ -145,16 +145,16 @@ class AppointmentController extends Controller
             DB::commit();
 
             return response()->json([
-                'erfolg' => true,
-                'nachricht' => 'Termin erfolgreich storniert',
-                'daten' => new AppointmentResource($appointment)
+                'success' => true,
+                'message' => 'Termin erfolgreich storniert',
+                'data' => new AppointmentResource($appointment)
             ]);
         } catch (Exception $e) {
             DB::rollBack();
 
             return response()->json([
-                'erfolg' => false,
-                'nachricht' => 'Fehler beim Stornieren des Termins',
+                'success' => false,
+                'message' => 'Fehler beim Stornieren des Termins',
                 'fehler' => $e->getMessage()
             ], 500);
         }

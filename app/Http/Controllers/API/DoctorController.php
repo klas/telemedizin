@@ -22,27 +22,21 @@ class DoctorController extends Controller
         }
 
         return response()->json([
-            'erfolg' => true,
-            'nachricht' => 'Ärzte erfolgreich abgerufen',
-            'daten' => DoctorResource::collection($doctors->get())
+            'success' => true,
+            'message' => 'Ärzte erfolgreich abgerufen',
+            'data' => DoctorResource::collection($doctors->get())
         ]);
     }
 
+
     public function show(int $id): JsonResponse
     {
-        $doctor = Doctor::with('specialization')->find($id);
-
-        if (!$doctor) {
-            return response()->json([
-                'erfolg' => false,
-                'nachricht' => 'Arzt nicht gefunden'
-            ], 404);
-        }
+        $doctor = Doctor::with('specialization')->findOrFail($id);
 
         return response()->json([
-            'erfolg' => true,
-            'nachricht' => 'Arzt erfolgreich abgerufen',
-            'daten' => new DoctorResource($doctor)
+            'success' => true,
+            'message' => 'Arzt erfolgreich abgerufen',
+            'data' => new DoctorResource($doctor)
         ]);
     }
 }

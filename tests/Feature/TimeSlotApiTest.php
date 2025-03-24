@@ -32,13 +32,13 @@ class TimeSlotApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'erfolg',
-                'nachricht',
-                'daten' => [
+                'success',
+                'message',
+                'data' => [
                     '*' => ['id', 'doctor_id', 'start_time', 'end_time', 'is_available']
                 ]
             ])
-            ->assertJson(['erfolg' => true]);
+            ->assertJson(['success' => true]);
     }
 
 
@@ -50,8 +50,8 @@ class TimeSlotApiTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'erfolg' => true,
-            'nachricht' => 'Zeitfenster ist verfügbar',
+            'success' => true,
+            'message' => 'Zeitfenster ist verfügbar',
         ]);
     }
 
@@ -63,8 +63,8 @@ class TimeSlotApiTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'erfolg' => false,
-            'nachricht' => 'Zeitfenster ist nicht mehr verfügbar',
+            'success' => false,
+            'message' => 'Zeitfenster ist nicht mehr verfügbar',
         ]);
     }
 }

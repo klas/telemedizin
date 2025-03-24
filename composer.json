@@ -8,8 +8,13 @@
         "framework"
     ],
     "license": "MIT",
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/klas/laravel-api-error-handler.git"
+    }],
     "require": {
         "php": "^8.2",
+        "hamidreza2005/laravel-api-error-handler": "dev-main",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1"

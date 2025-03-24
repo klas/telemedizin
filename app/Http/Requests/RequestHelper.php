@@ -15,8 +15,8 @@ trait RequestHelper
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'erfolg'   => false,
-            'nachricht'   => 'Validation errors',
+            'success'   => false,
+            'message'   => 'Validation errors',
             'fehler'      => $validator->errors()
         ], 422));
     }

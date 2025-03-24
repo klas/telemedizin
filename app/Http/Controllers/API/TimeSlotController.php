@@ -31,9 +31,9 @@ class TimeSlotController extends Controller
             ->get();
 
         return response()->json([
-            'erfolg' => true,
-            'nachricht' => 'Verfügbare Zeitfenster erfolgreich abgerufen',
-            'daten' => TimeSlotResource::collection($timeSlots)
+            'success' => true,
+            'message' => 'Verfügbare Zeitfenster erfolgreich abgerufen',
+            'data' => TimeSlotResource::collection($timeSlots)
         ]);
     }
 
@@ -52,16 +52,16 @@ class TimeSlotController extends Controller
             DB::commit();
 
             return response()->json([
-                'erfolg' => $isAvailable,
-                'nachricht' => $isAvailable ? 'Zeitfenster ist verfügbar' : 'Zeitfenster ist nicht mehr verfügbar'
+                'success' => $isAvailable,
+                'message' => $isAvailable ? 'Zeitfenster ist verfügbar' : 'Zeitfenster ist nicht mehr verfügbar'
             ], $isAvailable ? 200 : 422);
         } catch (Exception $e) {
             DB::rollBack();
 
             return response()->json([
-                'erfolg' => false,
-                'nachricht' => 'Fehler bei der Überprüfung der Verfügbarkeit',
-                'fehler' => $e->getMessage()
+                'success' => false,
+                'message' => 'Fehler bei der Überprüfung der Verfügbarkeit',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
