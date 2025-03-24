@@ -14,11 +14,11 @@ RESTful API für ein Telemedizin-Terminsystem, entwickelt mit Laravel.
 ## Installation
 
 - Repository klonen git clone https://github.com/klas/telemedizin.git
-- Abhängigkeiten installieren: `docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php84-composer:latest \
+- Abhängigkeiten installieren: `docker run --rm 
+    -u "$(id -u):$(id -g)" 
+    -v "$(pwd):/var/www/html" 
+    -w /var/www/html 
+    laravelsail/php84-composer:latest 
     composer install --ignore-platform-reqs`
 - Wenn einige Classes fehlen: `docker run --rm --interactive --tty --volume $PWD:/app composer dump-autoload`
 - .env-Datei kopieren: `cp .env.example .env`
